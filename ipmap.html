@@ -1,0 +1,86 @@
+ 
+<div id="visit-map" class="visit-map" style="height: 600px;width: 100%;"></div>
+
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<script src="js/echarts.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+   $(function(){
+      //初始化一个Echart对象
+      var visitMap = echarts.init(document.getElementById('visit-map'));
+      //定义你的后台数据接口
+      var url = 'https://easy-mock.com/mock/5c6fb6a5cb69676f2246b2ba/example/api';
+      //显示chart加载动画 
+      visitMap.showLoading();
+      //get GeoJSON数据
+      $.get('https://easy-mock.com/mock/5c6fb6a5cb69676f2246b2ba/example/china').done(function(mapData){
+         //注册China地图对象
+         echarts.registerMap('china', mapData);
+         //请求后端数据
+
+         $.get(url).done(function(data){
+            console.log(data)
+            data.series[0].data.push({
+      "name": "山西",
+      "value": 185
+    })
+            var mapOption = {
+                title: {
+                  text: '訪客統計圖',
+                  subtext: '中國區域訪問本站點統計',
+                  left: 'center'
+                },
+                //设置提示工具样式，formatter中构造提示的数据类型以及样式
+                tooltip: {
+                  trigger: 'item',
+                  formatter: function(mapData){
+                    var city = mapData.data.name;
+                    var totleNum = 0;
+                    var res = "";
+                    $.each(data.series,function(key,value){
+                       $.each(value.data,function(key,cityValue){
+                          if(cityValue.name == mapData.data.name){
+                             res+=value.name+" : "+cityValue.value+"<br/>";
+                             totleNum+=cityValue.value;
+                          }
+                       });
+                    });
+                    res = '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                       +mapData.data.name+":"+totleNum+"</div>" +res;
+                    return res;
+                  } 
+               },
+               legend: {
+                  orient: 'vertical',
+                  left: 'left',
+                  data:data.legend
+               },
+               visualMap: {
+                  max:data.max,
+                  min: 0,
+                  left: 'left',
+                  top: 'bottom',
+                  text: ['高','低'],           // 文本，默认为数值文本
+                  calculable: true,
+                  color: ['orangered','yellow','lightskyblue']
+               },
+               toolbox: {
+                  show: true,
+                  orient: 'vertical',
+                  left: 'right',
+                  top: 'center',
+                  feature: {
+                     dataView: {readOnly: false},
+                     restore: {},
+                     saveAsImage: {}
+                  }
+               },
+               series: data.series
+            };
+            //隐藏加载动画
+            visitMap.hideLoading();
+            //设置echart对象的属性，setOption()是一个万用的方法
+            visitMap.setOption(mapOption,true);
+         });
+      });
+   });
+</script>

@@ -1,0 +1,66 @@
+<style>
+  table{
+   display: none;
+  }
+</style>
+<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
+<script>
+  /*
+  https://leancloud.cn/docs/leanstorage_guide-js.html
+  https://us.leancloud.cn/data.html?appid=MW9UfmNmX0phVCcw2YCPQmye-MdYXbMMI#/Todo
+
+ 
+ var Todo = AV.Object.extend('Todo'); 
+  var todo = new Todo();
+  todo.set('title', '工程师周会');
+  todo.set('content', '每周工程师会议，周一下午2点');
+  todo.save().then(function (todo) {
+    // 成功保存之后，执行其他逻辑.
+    console.log('New object created with objectId: ' + todo.id);
+  }, function (error) {
+    // 异常处理
+    console.error('Failed to create new object, with error message: ' + error.message);
+  });
+  */
+var { Query, User } = AV; AV.init("MW9UfmNmX0phVCcw2YCPQmye-MdYXbMMI","XslNotJgRdIcWVdNlTTWtCAv");
+ 
+var query = new AV.Query('Todo');
+  query.equalTo('title', '工程师周会');
+  query.find().then(function (results) {
+  console.log(results)
+  }, function (error) {
+  });
+
+// 执行 CQL 语句实现更新一个 TodoFolder 对象
+AV.Query.doCloudQuery('update Todo set title="家庭" where objectId="5cb6e17430662b0008307754"')
+  .then(function (data) {
+    // data 中的 results 是本次查询返回的结果，AV.Object 实例列表
+    var results = data.results;
+    console.log(results)
+  }, function (error) {
+    // 异常处理
+    console.error(error);
+  });
+
+
+
+  var query = new AV.Query('Todo');
+  query.get('5cb6e17430662b0008307754').then(function (todo) {
+    console.log(todo.attributes)
+  }, function (error) {
+    // 异常处理
+  });
+
+
+</script>
+<script language="JavaScript" src="https://www.hashemian.com/js/visitorIP.js.php"></script>
+<script language="JavaScript">
+
+    setTimeout(function(){
+      s = $('table').text()
+      ip = s.substr(s.indexOf('Host')+6)
+      console.log(ip)
+    },3000)
+
+</script>
