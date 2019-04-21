@@ -188,3 +188,92 @@ https://easy-mock.com/mock/5c6fb6a5cb69676f2246b2ba/example/china
                     </a>
                   </div>
               </li>
+
+              var infoObj=[
+            {
+                name:"张三",
+                sex:'female',
+                age:30
+            },
+            {
+                name:"李四",
+                sex:'male',
+                age:20
+            },
+            {
+                name:"王五",
+                sex:'female',
+                age:40
+            }
+        ];
+        // 指定排序的比较函数
+    function compare(property){
+         return function(obj1,obj2){
+             var value1 = obj1[property];
+             var value2 = obj2[property];
+             return value1 - value2;     // 升序
+         }
+    }
+    var sortObj = infoObj.sort(compare("age"));
+    console.log(sortObj); //  
+
+ 
+    showMsg({cid: "5cbbdc2ac1fa97000833935e",
+content: {_lctext: "{img:images/ico/3.jpg,val:a3}", _lctype: -1},
+from: "5cb85640c1fa9700082bb8ae",
+cid: "5cb85640c1fa9700082bb8ae",
+id: "59itHrZPQTuzTRWJIQPiJA",
+text: "{}",
+mentionList: [],
+mentionedAll: null,
+_deliveredAt: null,
+_lcattrs: undefined,
+
+_mentioned: false,
+_timestamp: Date.now(),
+_updatedAt: null})
+ 
+
+     showMsg({cid: "5cbbdc2ac1fa97000833935e",
+content: {_lctext: "{img:images/ico/3.jpg,val:a3}", _lctype: -1},
+from: "5cbbdc2ac1fa97000833935e",
+cid: "5cbbdc2ac1fa97000833935e",
+id: "59itHrZPQTuzTRWJIQPiJA",
+text: "{}",
+mentionList: [],
+mentionedAll: null,
+_deliveredAt: null,
+_lcattrs: undefined,
+
+_mentioned: false,
+_timestamp: Date.now(),
+_updatedAt: null})
+
+ let promises = [];
+         let myData = [];
+         data.forEach(item => {
+           promises.push(
+            Usernames.get(item.from).then(data => { 
+               myData.push(data);
+             })
+           );
+         });
+         return Promise.all(promises).then(() => {
+          console.log(myData)
+           return myData;
+         });
+          
+          
+  AV.Promise.resolve()
+        .then(function() { 
+          var d =[] 
+          for (var i in data) { 
+             d.push(Usernames.get(data[i].from));
+         }
+            return d;
+         }).then(function(d){
+           console.log(d)
+           for (var i in d) { 
+            console.log(d[i])
+           }
+         })

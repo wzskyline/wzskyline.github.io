@@ -52,7 +52,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>wzskyline</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -64,7 +64,7 @@
               <div class="menu_section">
                 <h3>目錄</h3>
                 <ul class="nav side-menu">
-                  <li><a onclick="change_menu(3)" ><i class="fa fa-home"></i> 首頁  </a></li>
+                  <li><a onclick="change_menu(0)" ><i class="fa fa-home"></i> 首頁  </a></li>
                   <li><a onclick="change_menu(4,true)" ><i class="fa fa-edit"></i> 资料  </a> </li>
                   <li><a onclick="change_menu(5,true)" ><i class="fa fa-desktop"></i> 大厅   </a> </li>
                   <li><a onclick="change_menu(6)" ><i class="fa fa-table"></i> 留言</a></li>
@@ -111,11 +111,11 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src="images/img.jpg" alt="">John Doe
+                  <img src="images/img.jpg" alt="">wzskyline
                   <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">                   
-                  <li><a onclick="change_menu(0)"> <i class="fa fa-sign-out pull-right"></i> 登陆</a></li>
+                  <li><a onclick="change_menu(1)"> <i class="fa fa-sign-out pull-right"></i> 登陆</a></li>
                 </ul>
               </li> 
               <!-- message li -->
@@ -130,65 +130,10 @@
 
       <!-- /top navigation -->
          
-<!-- page0 登陆 -->
-<div class="right_col page mainpage">
-  <div class="x_panel">
-      <div style="padding: 10px;width:50%">
-          <input type="text" class="form-control user_login_name" placeholder="昵称" required="" />     
-      </div>
-      <div style="padding: 10px;width:50%">
-          <input type="password" class="form-control user_login_password" placeholder="密码" required="" />
-      </div>
-      <div style="padding: 10px;width:50%">
-          <a class="btn btn-default submit" onclick="page[0].login()">登陆</a>
-      </div>
-      <div style="padding: 10px;width:50%">
-          <a onclick="change_menu(1)" class="reset_pass" href="#"> 前往注册</a>
-          <span>/</span>
-          <a onclick="change_menu(2)" class="reset_pass" href="#"> 忘记密码</a>
-      </div> 
-  </div end="x_panel">
-</div end="page">
-<!-- page1 注册 -->
-<div class="right_col page mainpage">
-  <div class="x_panel">
-      <div style="padding: 10px;width:50%">
-          <input type="text" class="form-control user_regist_name" placeholder="起一个个性昵称" required="" />
-      </div>
-      <div style="padding: 10px;width:50%">
-          <input type="password" class="form-control user_regist_password" placeholder="来个随意的密码" required="" />
-      </div>
-      <div style="padding: 10px;width:50%">
-          <input type="text" class="form-control user_regist_email" placeholder="有效的邮箱" required="" />
-      </div>
-      <div style="padding: 10px;width:50%">
-          <a class="btn btn-default submit" onclick="page[1].regist()">注册</a>
-      </div>
-      <div style="padding: 10px;width:50%">
-          <a onclick="change_menu(0)" class="reset_pass" href="#">前往登陆</a>
-      </div>
-  </div end="x_panel">
-</div end="page">
-<!-- page2 忘记密码 -->
-<div class="right_col page mainpage">
-  <div class="x_panel">
-      <div style="padding: 10px;">
-           温馨提示:扫描一下微信取得联系后可找回密码
-      </div>
-      <div style="padding: 10px;">
-           <img src="images/wechat.jpg" style="padding:0 10% 0 10% ;width:100%" >
-      </div>
-       
-      <div style="padding: 10px;width:50%">
-          <a onclick="change_menu(0)" class="reset_pass" href="#">前往登陆</a>
-      </div>
 
 
-  </div end="x_panel">
-</div end="page">
 
-
-<!-- page3 content -->
+<!-- page0 content -->
 <div class="right_col page mainpage"  role="main">
   <div class="row">
     <!-- Start 半屏信息 -->
@@ -200,17 +145,21 @@
           </div>
           <div class="x_content">
             <div class="">               
-                  <!-- 個人簡介開始 -->
-                  <pre>
-                      您好,我是小站的开发者,我叫文洲,
-                  从步入数学与应用数学专业以来,
-                  都对编程有着浓烈兴趣,
-                  从C++开始,认识计算机的数据结构以及相应的知识基础。
-                      编写网页,感受一点点成就感。
-                  保持学习,JAVA,NODEJS ...... 一入編程深似海
-                  在编程中遇见,生活中奇妙的事情
-                  </pre>
-                  <!-- 個人簡介結束 -->
+<!-- 個人簡介開始 -->
+<pre>
+    您好,我是小站的开发者,我叫文洲,
+从步入数学与应用数学专业以来,
+都对编程有着浓烈兴趣,
+    从C++开始,
+认识计算机的世界
+以及相应的知识基础。
+    编写网页,感受一点点成就感。
+保持学习,JAVA,NODEJS ...... 
+一入編程深似海,
+但依旧保持热情去迎接新的内容,
+在编程中遇见,生活中奇妙的事情
+</pre>
+<!-- 個人簡介結束 -->
             </div>
           </div>
         </div>
@@ -218,7 +167,7 @@
       <!-- End 半屏信息 -->
       
     <!-- Start 半屏信息 -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="x_panel">
             <div class="x_content">
               <div class="">
@@ -233,10 +182,10 @@
         <div class="x_panel">
           <div class="x_title">
               <h2 class="section-title"> 春江花月夜 张若虚</h2>
-            <div class="clearfix"></div>
+              <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <div class="">
+            <div class="" style="height: 500px;">
                 
                 春江潮水连海平，海上明月共潮生。</br>
                 滟滟随波千万里，何处春江无月明!</br>
@@ -257,23 +206,14 @@
                 斜月沉沉藏海雾，碣石潇湘无限路。</br>
                 不知乘月几人归，落月摇情满江树。
             </div>
+            
           </div>
         </div>
       </div>
   <!-- End 半屏信息 -->   
-    <!-- Start 半屏信息 -->
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel">
-          <div class="x_content">
-            <div class="">
-                <img src="images/scenery/3.jpg" style="width:100%" >
-            </div>
-          </div>
-        </div>
-      </div>
-  <!-- End 半屏信息 -->    
+ 
       <!-- Start 半屏信息 -->
-      <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="col-md-4 col-sm-4 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
                 <h2 class="section-title"> 选择  雪阳</h2>
@@ -312,9 +252,79 @@
             </div>
           </div>
         </div>
-    <!-- End 半屏信息 -->        
+    <!-- End 半屏信息 -->  
+    
+        <!-- Start 半屏信息 -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_content">
+              <div class="">
+                  <img src="images/scenery/3.jpg" style="width:100%" >
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- End 半屏信息 -->   
   </div>
 </div>
+
+
+<!-- page1 登陆 -->
+<div class="right_col page mainpage">
+  <div class="x_panel">
+      <div style="padding: 10px;width:50%">
+          <input type="text" class="form-control user_login_name" placeholder="昵称" required="" />     
+      </div>
+      <div style="padding: 10px;width:50%">
+          <input type="password" class="form-control user_login_password" placeholder="密码" required="" />
+      </div>
+      <div style="padding: 10px;width:50%">
+          <a class="btn btn-default submit" onclick="page[1].login()">登陆</a>
+      </div>
+      <div style="padding: 10px;width:50%">
+          <a onclick="change_menu(2)" class="reset_pass" href="#"> 前往注册</a>
+          <span>/</span>
+          <a onclick="change_menu(3)" class="reset_pass" href="#"> 忘记密码</a>
+      </div> 
+  </div end="x_panel">
+</div end="page">
+<!-- page2 注册 -->
+<div class="right_col page mainpage">
+  <div class="x_panel">
+      <div style="padding: 10px;width:50%">
+          <input type="text" class="form-control user_regist_name" placeholder="起一个个性昵称" required="" />
+      </div>
+      <div style="padding: 10px;width:50%">
+          <input type="password" class="form-control user_regist_password" placeholder="来个随意的密码" required="" />
+      </div>
+      <div style="padding: 10px;width:50%">
+          <input type="text" class="form-control user_regist_email" placeholder="有效的邮箱" required="" />
+      </div>
+      <div style="padding: 10px;width:50%">
+          <a class="btn btn-default submit" onclick="page[2].regist()">注册</a>
+      </div>
+      <div style="padding: 10px;width:50%">
+          <a onclick="change_menu(1)" class="reset_pass" href="#">前往登陆</a>
+      </div>
+  </div end="x_panel">
+</div end="page">
+<!-- page3 忘记密码 -->
+<div class="right_col page mainpage">
+  <div class="x_panel">
+      <div style="padding: 10px;">
+           温馨提示:扫描一下微信取得联系后可找回密码
+      </div>
+      <div style="padding: 10px;">
+           <img src="images/wechat.jpg" style="padding:0 10% 0 10% ;width:100%" >
+      </div>
+       
+      <div style="padding: 10px;width:50%">
+          <a onclick="change_menu(1)" class="reset_pass" href="#">前往登陆</a>
+      </div>
+
+
+  </div end="x_panel">
+</div end="page">
         <!-- /page content -->
 <!-- page4  修改個人信息  -->
 <div class="right_col page mainpage">
@@ -416,11 +426,11 @@
   <!-- page7 説明  -->
 <div class="right_col page mainpage">
     <div class="x_panel">
-        <div style="padding: 10px;width:50%">
-            <pre>
-                说明:
-                1.系统核实后留言可显示
-            </pre>
+        <div style="padding: 10px;">
+<pre>
+    说明:
+    1.系统核实后留言可显示
+</pre>
             
              
         </div>
@@ -451,12 +461,13 @@
     <!-- page9 聯係  -->
 <div class="right_col page mainpage">
     <div class="x_panel">
-        <div style="padding: 10px;width:50%">
-            <pre>
-                联系
-                微信: wzskyline 
-                QQ群: 309150550，欢迎您的到來
-            </pre>
+        <div style="padding: 10px;">
+<pre>
+    联系
+    微信: wzskyline 
+    QQ群: 309150550
+    欢迎您的到來!
+</pre>
         </div>
         
         
@@ -484,9 +495,9 @@
                   
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                <div class="x_content table-responsive">
 
-                  <table class="table">
+                  <table class="table text-nowrap">
                     <thead>
                       <tr>
                         <th>ip</th>

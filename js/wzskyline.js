@@ -34,6 +34,15 @@ wzskyline = {
         }
     }
 }
+
+ // 指定排序的比较函数
+ function compare(property){
+  return function(obj1,obj2){
+      var value1 = obj1[property];
+      var value2 = obj2[property];
+      return value1 - value2;     // 升序
+  }
+}
 function formatDate(date){
     date = date? date: new Date() 
     m = date.getMonth()+1
@@ -81,21 +90,25 @@ function departure(){
 function user_ui(){
     user =  localStorage.getItem('user')?JSON.parse(localStorage.getItem('user')):user;
 
+    if( u && typeof(u) =='object'   ){
+      $('.dropdown-usermenu').html('<li><a onclick="login_out()"> <i class="fa fa-sign-out pull-right"></i> 登出 </a></li>')
+      
+    } else{
+      $('.dropdown-usermenu').html(  '<li><a onclick="change_menu(1)"> <i class="fa fa-sign-out pull-right"></i> 登陆</a></li>')
+      user = user_tmp
+    }
     $(".profile_pic").html('<img src="'+user.img+'"  alt="..." class="img-circle profile_img">')
     $(".profile_info").html('<span>'+user.tip+' </span><h2>'+user.name+'</h2> </div> ')
     $(".user-profile").html('<img  src="'+user.img+'"  alt=""> '+user.name+' <span class=" fa fa-angle-down"></span>')
-    if(user.id  ){
-      $('.dropdown-usermenu').html('<li><a onclick="login_out()"> <i class="fa fa-sign-out pull-right"></i> 登出 </a></li>')
-    } else{
-      $('.dropdown-usermenu').html(  '<li><a onclick="change_menu(0)"> <i class="fa fa-sign-out pull-right"></i> 登陆</a></li>')
-    }
+    
+
 }
 user_ui()
 function change_menu(index, is_Check) {
     $(".sonpage").hide() 
     $(".page").parent().find(".mainpage").hide()
-    if (is_Check && u == null) { 
-      $(".page").parent().find(".mainpage").eq(0).show()
+    if (is_Check && typeof(u) =='string') { 
+      $(".page").parent().find(".mainpage").eq(1).show()
     } else { 
        $(".page").parent().find(".mainpage").eq(index).show()
     }
@@ -104,6 +117,7 @@ function change_menu(index, is_Check) {
     if( !page[index].is_init ){  
       page[index].init()
     }     
+    page[index].flush()
     localStorage.setItem('cur_page',index)
   }
   function login_out(){
@@ -112,7 +126,7 @@ function change_menu(index, is_Check) {
     u = null
     user = user_tmp
     localStorage.setItem('user',JSON.stringify(user))
-    change_menu(3)
+    change_menu(0)
     user_ui()
   }
   ////整合 聊天页面js
@@ -126,7 +140,7 @@ function change_menu(index, is_Check) {
   
    
   // 请换成你自己的一个房间的 conversation id（这是服务器端生成的）
-  var roomId = '5cb978cadb0572000863b369';
+  var roomId = '5cbbdc2ac1fa97000833935e';
   
   // 每个客户端自定义的 id
   var clientId = 'LeanCloud';
@@ -315,42 +329,34 @@ function change_menu(index, is_Check) {
               return id;
             }.bind(this)
           );
-      }
+      } 
       return this._cache[id];
     },
   };
   
   // 显示接收到的信息
+
   function showMsg(message, isBefore) {
-    
+    console.log("  showMsg   showMsg()")
+    console.log(message)
     var text = message.text;
     AV.Promise.resolve()
      .then(function() { 
-         if (message.cid === user.id) {  
-              return '自己'; 
-            } else {  
-              return Usernames.get(message.from);
-            }
+         return Usernames.get(message.from);
       })
       .then(function(from) {
-        if (message instanceof AV.TextMessage) {
-          if ( String(text).replace(/^\s+/, '').replace(/\s+$/, '') ) {
-             msg = JSON.parse(message.text) 
-             img = msg.img ? msg.img :"images/ico/2.jpg"
-             console.log(message)
-             console.log(message.cid, user.id)
-             if (from === user.name) { 
-                showMyLog( img, msg.val, formatTime(message.timestamp),true)
-              }else{
-                showOtherLog( img,   encodeHTML(from) ,msg.val, formatTime(message.timestamp))
-              }
-          }
-        } else if (message instanceof AV.FileMessage) { showLog('[' +formatTime(message.timestamp) +']  ' +
-              encodeHTML(from) + '： ',
-            createLink(message.getFile().url()),
-            isBefore
-          );
-        }
+        if (message instanceof AV.TextMessage) {  }
+        console.log("  Promise   showMsg()")
+        console.log(message)
+        if ( String(text).replace(/^\s+/, '').replace(/\s+$/, '') ) {
+          msg = JSON.parse(message.text) 
+          img = msg.img ? msg.img :"images/ico/2.jpg" 
+          if (from === user.name) { 
+             showMyLog( img, msg.val, formatTime(message.timestamp))
+           }else{
+             showOtherLog( img,   encodeHTML(from) ,msg.val, formatTime(message.timestamp))
+           }
+       }
       });
   }
   
@@ -370,6 +376,9 @@ function change_menu(index, is_Check) {
       // 标记正在拉取
       logFlag = true;
     }
+
+   
+     
     messageIterator
       .next()
       .then(function(result) {
@@ -380,9 +389,44 @@ function change_menu(index, is_Check) {
         if (l) {
           msgTime = data[0].timestamp;
         }
-        for (var i = l - 1; i >= 0; i--) {
-          showMsg(data[i], true);
-        }
+        
+        var data = data.sort(compare("_timestamp"));
+        console.log("XXXXXXXXXXXXXXXXXXXXXX")
+        console.log(data)
+        let promises = [];
+        let myData = [];
+
+        data.forEach(item => {
+          promises.push(
+           Usernames.get(item.from).then(from => { 
+              item.from = from
+              myData.push(item);
+              console.log(myData)
+            })
+          );
+        });
+        Promise.all(promises).then(() => {
+          console.log(myData)
+          myData = myData.sort(compare("_timestamp"));
+          console.log(myData)
+          for (var i in myData){
+            message = myData[i]
+            msg = JSON.parse(message.text) 
+            img = msg.img ? msg.img :"images/ico/2.jpg" 
+            if (message.from === user.name) { 
+               showMyLog( img, msg.val, formatTime(message.timestamp))
+             }else{
+               showOtherLog( img,   encodeHTML(message.from) ,msg.val, formatTime(message.timestamp))
+             }
+
+
+          }
+
+        });
+         
+          
+
+
         if (l) {
           printWall.scrollTop = printWall.scrollHeight - height;
         }
@@ -487,8 +531,25 @@ function change_menu(index, is_Check) {
 
   ///聊天js 整合结束
 
+page[0] = {
+    name: "首頁",
+    cur_son_page:null,
+    is_init: false,
+    init: function () {
+        
+    },
+    onresize:function () {
+
+
+    },
+    flush: function () {
+         
+
+    },
+} 
+
   //login
-  page[0] = {
+  page[1] = {
     name: "登陆页面",
     cur_son_page:null,
     is_init: false,
@@ -511,7 +572,7 @@ function change_menu(index, is_Check) {
 				user.w =  b.encode( $(".user_login_password").val().trim());
                 console.log(user);
                 localStorage.setItem('user',JSON.stringify(user))
-                change_menu(3)
+                change_menu(0)
                 user_ui()
              } else{
                 BootstrapDialog.show({
@@ -535,7 +596,7 @@ function change_menu(index, is_Check) {
     },
 }
 //regist
-page[1] = {
+page[2] = {
     name: "注册页面",
     cur_son_page:null,
     is_init: false,
@@ -590,7 +651,7 @@ page[1] = {
 
     },
 } 
-page[2] = {
+page[3] = {
     name: "忘记密码页面",
     cur_son_page:null,
     is_init: false,
@@ -606,22 +667,7 @@ page[2] = {
 
     },
 } 
-page[3] = {
-    name: "首頁",
-    cur_son_page:null,
-    is_init: false,
-    init: function () {
-        
-    },
-    onresize:function () {
 
-
-    },
-    flush: function () {
-         
-
-    },
-} 
 page[4] = {
     name: "資料",
     cur_son_page:null,
@@ -691,7 +737,7 @@ page[5] = {
     },
     flush: function () {
          
-
+      this.init()
     },
 }
 // 留言
@@ -706,30 +752,45 @@ page[6] = {
       //query.equalTo('state', 1);
       query.find().then(function (results) {
       console.log(results)
-      html = ""
+      
        message_list = results
-      $.each(results,function(i,o){
-        var color = colors[Math.floor(Math.random()*colors.length)]; 
-        item = o.attributes
-        html +='<div class="col-md-6 col-sm-6 col-xs-12">'
-        html +='<div class="x_panel" style="BACKGROUND:'+color+'">'
-        html +='<div class="x_title">'
-        html +='<h2>' + item.userid + '</h2>'
-        html +='<span>' + item.time + '</span>'
-        html +='<div class="clearfix"></div>'
-        html +='</div>'
-        html +='<div class="x_content">'
-        html +='<div class="">'
-        html +=  item.message  
-        html +='</div>'
-        html +='</div>'
-        html +='</div>'
-        html +='</div> '
- 
-      })
-      $("#webSite_message").append(html)
+       
 
+       let promises = [];
+       let myData = [];
+       results.forEach(item => {
+         promises.push(
+          Usernames.get(item.attributes.userid).then(data => { 
+             myData.push(data);
+           })
+         );
+       });
+       Promise.all(promises).then(() => {
+        for(var i in results){ 
+           
+          var color = colors[Math.floor(Math.random()*colors.length)]; 
+          
+          html = ""  
+          html +='<div class="col-md-6 col-sm-6 col-xs-12">'
+          html +='<div class="x_panel" style="BACKGROUND:'+color+'">'
+          html +='<div class="x_title">'
+          html +='<h2>' + myData[i]+ '</h2>'
+          html +='<div class="clearfix"></div>' 
+          html +='<h5>' + results[i].attributes.time + '<h5>'
+          html +='<div class="clearfix"></div>'
+          html +='</div>'
+          html +='<div class="x_content">'
+          html +='<div class="">'
+          html +=  results[i].attributes.message  
+          html +='</div>'
+          html +='</div>'
+          html +='</div>'
+          html +='</div> '
+          $("#webSite_message").append(html)
+        } 
 
+       }); 
+         
       }, function (error) {
       });
       $(".send_message_btn").attr("disabled", true); 
