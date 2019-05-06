@@ -125,15 +125,59 @@ function change_menu(index, is_Check) {
       $("#chatTable").html(html)
       }, function (error) {
       });
-
-      $('.chat_check_box').iCheck({checkboxClass: 'icheckbox_square-green',radioClass: 'iradio_square-green'});
+ 
     },
     flush: function () {
         
 
     },
 } 
+//简历
+page[2] = {
+  name: "简历",
+  cur_son_page:null,
+  is_init: false,
 
+  init: function (state) { 
+    $("#workerUpload").click(function(){
+      var fileUploadControl = $('#photoFileUpload')[0];
+      if (fileUploadControl.files.length > 0) {
+        var localFile = fileUploadControl.files[0];
+        var name = 'worker.pdf';
+  
+        var file = new AV.File(name, localFile);
+        file.save().then(function(file) {
+          // 文件保存成功
+          console.log(file.url());
+          var obj = AV.Object.extend('file');
+          var obj = new obj();
+          obj.set('filename','worker.pdf');
+          obj.set('base64', file.url()); 
+          obj.set('state', 0);
+          obj.save().then(function (obj) { 
+            console.log('New object created with objectId: ' + obj.id);
+            BootstrapDialog.show({
+              title: '上传成功',
+              message: '可调整文件状态.',
+            })
+
+          }, function (error) {
+            // 异常处理
+            console.error('Failed to create new object, with error message: ' + error.message);
+          });
+
+        }, function(error) {
+          // 异常处理
+          console.error(error);
+        });
+      }
+    })
+  },
+  flush: function () {
+      
+
+  },
+} 
 function admin_update_message(){
     // 獲取列表
   $.each($('.message_check_box'),function(i,o){

@@ -90,7 +90,7 @@ function departure(){
 function user_ui(){
     user =  localStorage.getItem('user')?JSON.parse(localStorage.getItem('user')):user;
 
-    if( u && typeof(u) =='object'   ){
+    if( user.id   ){
       $('.dropdown-usermenu').html('<li><a onclick="login_out()"> <i class="fa fa-sign-out pull-right"></i> 登出 </a></li>')
       
     } else{
@@ -104,10 +104,11 @@ function user_ui(){
 
 }
 user_ui()
+$("#worker").attr("height",window.innerHeight*4/5)
 function change_menu(index, is_Check) {
     $(".sonpage").hide() 
     $(".page").parent().find(".mainpage").hide()
-    if (is_Check && typeof(u) =='string') { 
+    if (is_Check &&  user.id ==null) { 
       $(".page").parent().find(".mainpage").eq(1).show()
     } else { 
        $(".page").parent().find(".mainpage").eq(index).show()
@@ -563,13 +564,13 @@ page[0] = {
         AV.User.logIn($(".user_login_name").val().trim() ,  $(".user_login_password").val().trim()).then(function (loggedInUser) {
              console.log(loggedInUser,loggedInUser.attributes.emailVerified,loggedInUser.id);
              if(loggedInUser.attributes.emailVerified){
-                u = loggedInUser
+               // u = loggedInUser
                 console.log(loggedInUser.attributes.emailVerified,loggedInUser.id);
                 user.id = loggedInUser.id
                 user.img = loggedInUser.attributes.img
                 user.name = loggedInUser.attributes.username
                 var b = new Base64()
-				user.w =  b.encode( $(".user_login_password").val().trim());
+				        user.w =  b.encode( $(".user_login_password").val().trim());
                 console.log(user);
                 localStorage.setItem('user',JSON.stringify(user))
                 change_menu(0)
@@ -873,7 +874,20 @@ page[8] = {
     cur_son_page:null,
     is_init: false,
     init: function () {
-        
+      //this.is_init = true;
+           //加載信息
+           var query = new AV.Query('file');
+           query.equalTo('state', 1);
+           query.find().then(function (results) {
+             $("#workDownload").click(function(){
+              window.open(results[0].attributes.base64);
+             })
+            $("#worker").attr("src",results[0].attributes.base64)
+           })
+
+           
+
+       
     },
     onresize:function () {
 
