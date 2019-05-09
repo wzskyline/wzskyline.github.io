@@ -882,8 +882,39 @@ page[8] = {
              $("#workDownload").click(function(){
               window.open(results[0].attributes.base64);
              })
-            $("#worker").attr("src",results[0].attributes.base64)
+          //  $("#worker").attr("src",results[0].attributes.base64)
+          var pdf = document.getElementById("pdf")
+			PDFJS.cMapPacked = true; 
+			var pdfDoc = null; 
+			function createPage() {
+				var div = document.createElement("canvas"); 
+				pdf.appendChild(div);
+				return div;
+			} 
+			function renderPage(num) {
+				pdfDoc.getPage(num).then(function (page) {
+					var viewport = page.getViewport(2.0);
+					var canvas = createPage();
+					var ctx = canvas.getContext('2d');
+
+					canvas.height = viewport.height;
+					canvas.width = viewport.width;
+
+					page.render({
+						canvasContext: ctx,
+						viewport: viewport
+					});
+				});
+			} 
+			PDFJS.getDocument( results[0].attributes.base64).then(function (pdf) {
+				pdfDoc = pdf;
+				for (var i = 1; i <= pdfDoc.numPages; i++) {
+					renderPage(i)
+				}
+			});
+
            })
+
 
            
 
