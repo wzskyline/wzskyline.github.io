@@ -1,0 +1,68 @@
+<input id="search" type="text" placeholder="placeholder" value=""></input>
+<input type="button" value="submit"></input>
+<ul>
+  <li>1 ul>li1</li>
+  <li>1 ul>li2</li>
+  <li>1 ul>li3</li>
+  <li>1 ul>li4</li>
+  <ul>
+    <ul>
+      <li>2 ul>li1</li>
+      <li>2 ul>li2 <a target="_blank">a with target</a></li>
+      <li>2 ul>li3 <a href="/">a with href</a></li>
+      <li>2 ul>li4</li>
+      <ul>
+        <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+		  // dom 准备好后执行
+          $(document).ready(function () { });
+		  //简写并会再执行别的内容
+          $(function () {});
+		  // 图片加载完后执行,慢一些,只会认一个函数
+          window.onload = function () {}
+          $(function () {
+            $(":button").click(function () {
+              $("*").attr('style', "font-size:24px")
+              $(this).attr('value') == "submit" ? $(this).attr('value', '提交') : $(this).attr('value', 'submit')
+              val = $("#search").val()
+              if (val) $(this).attr('value', val);
+            });
+
+            function elevent(path) {
+              $(path).click(function () { console.log("click()");}); // 鼠标完成上下才能确定一次clcik
+              $(path).dblclick(function () { console.log("dblclick()");});
+              $(path).mouseenter(function () { console.log("mouseenter()");});
+              $(path).mouseleave(function () { console.log("mouseleave()");});
+              $(path).mousedown(function () { console.log("mousedown()");});
+              $(path).mouseup(function () { console.log("mouseup()");});
+              $(path).hover(function () { console.log("hover()");});
+              $(path).focus(function () { console.log("focus()");});
+              $(path).blur(function () { console.log("blur()");});
+            }
+            elevent("#search");
+            elevent(":button");
+            $("ul li:first").click(function () {
+              $("ul li:first").attr("title", "ul li:first 改变一个")
+            });
+            $("ul li:first-child").click(function () {
+              $("ul li:first-child").attr("title", "ul li:first-child 改变多个")
+            });
+
+            $('ul li').last().click(function () {
+              $("li:even").attr("style", "color:red")
+            });
+            $('ul li').last().dblclick(function () {
+              $("li:odd").attr("style", "color:blue")
+            });
+            $('ul>li:nth-child(3)').click(function () {
+              $("[href]").attr("style", "color:red")
+              alert($(this).text())
+              alert($(this).html())
+            });
+            $('ul:nth-child(1)>li:nth-child(2)').click(function () {
+              $("a[target='_blank']").attr("style", "color:red")
+            });
+
+          });
+        </script>
+        <br title="1.6 版本后的 prop函数操作更多属性" url="https://www.cnblogs.com/zhncnblogs/p/10894190.html">

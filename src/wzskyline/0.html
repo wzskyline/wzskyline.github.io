@@ -73,41 +73,14 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-       <a href="nodeJsDemo1.html" target="_blank">案例1:邮件/文件/网络/下载图片</a> 
        <div>
-         <h3 class="leetCode">leetCode 4月4号晚</h3>
+         <h3 class="leetCode">学习</h3>
          
         <pre class="brush:javascript">
-          //  不能step<1 连写
-          var countAndSay = function(n) {
-          var tailStr = "1"  
-          var step=1 
-          while(step < n){
-              step++ 
-              all=[]
-           while(tailStr.length>0  ){ 
-              curCount=[1,1]
-              curCount[1] = tailStr[0]
-            while(true){
-              if(tailStr[0]==tailStr[1]){
-                 curCount[0]=curCount[0]+1 
-                 tailStr=tailStr.substr(1) 
-               }else{ 
-                   tailStr=tailStr.substr(1) 
-                 break 
-               } 
-            } 
-            all.push(curCount) 	
-          } 
-          tailStr = all.join("");
-          while(tailStr.indexOf(",")>0){
-            tailStr = tailStr.replace(',',"");
-          } 
-        }
-        return tailStr
-      };
-      
-      </pre>
+          
+          npx http-server 
+         
+       </pre>
        </div>
       </div>  
     

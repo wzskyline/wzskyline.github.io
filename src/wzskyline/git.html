@@ -73,41 +73,52 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-       <a href="nodeJsDemo1.html" target="_blank">案例1:邮件/文件/网络/下载图片</a> 
        <div>
-         <h3 class="leetCode">leetCode 4月4号晚</h3>
+         <h3 class="leetCode">git 常见命令</h3>
          
         <pre class="brush:javascript">
-          //  不能step<1 连写
-          var countAndSay = function(n) {
-          var tailStr = "1"  
-          var step=1 
-          while(step < n){
-              step++ 
-              all=[]
-           while(tailStr.length>0  ){ 
-              curCount=[1,1]
-              curCount[1] = tailStr[0]
-            while(true){
-              if(tailStr[0]==tailStr[1]){
-                 curCount[0]=curCount[0]+1 
-                 tailStr=tailStr.substr(1) 
-               }else{ 
-                   tailStr=tailStr.substr(1) 
-                 break 
-               } 
-            } 
-            all.push(curCount) 	
-          } 
-          tailStr = all.join("");
-          while(tailStr.indexOf(",")>0){
-            tailStr = tailStr.replace(',',"");
-          } 
-        }
-        return tailStr
-      };
-      
-      </pre>
+          
+          git reset --hard HEAD && git pull
+          git add .
+          git commit -m "commit"
+          git push
+          
+          git config --global user.name "wzskyline"
+          git config --global user.email "wzskyline@qq.com"
+          # 统一去掉账户信息
+          git config --system --unset credential.helper
+          # 查看用户信息
+          git config user.name
+          git config user.email
+          # 设置信息
+          git config --global user.name "your name"
+          # 取消全局设置
+          git config --global --unset user.name 
+          git config --global --unset user.email 
+          # 查看日志与项目路径
+          git log
+          git remote -v 
+          # 分支管理
+          git branch 
+          git branch local
+          git checkout local
+          git checkout -b local
+          #删除分支 
+          git branch -d local
+          git push --delete origin local
+          # 合併至dev
+          git add .
+          git commit -m "提交"
+          git checkout dev     #dev 上需要 是最新的 
+          git pull
+          git checkout bobi    #bobi分支准备连接到dev
+          git rebase dev
+          git checkout dev     #dev 上 merge bobi分支
+          git merge --no-ff  bobi
+          git push origin dev
+          git checkout bobi   #bobi分支上与dev分支保持一致 
+          git rebase dev
+       </pre>
        </div>
       </div>  
     

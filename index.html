@@ -68,6 +68,10 @@
         <div class="right_col" role="main">
           <div>
             <h1>在家也好好好学习哒</h1>
+            <div class="codeArea">
+               <div id="qrcode"></div>
+               <div class="title">本站二维码,扫码可见手机版本</div>
+            </div>
           </div>
         </div>
 	    	<!-- page content -->
@@ -88,12 +92,41 @@
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/iCheck/icheck.min.js"></script>
-
-    <!-- Custom Theme Scripts -->
+    
+    <!-- CDN -->
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    
     <script src="src/js/custom.min.js"></script>
 	  <script src="src/js/my.js"></script>
     <script>
-      ui.menu('src')
+      jQuery(function(){
+          console.time("init")
+          ui.menu('src')
+          $('#qrcode').qrcode({
+                text:"https://wzskyline.github.io",
+                render   : "canvas",//设置渲染方式  
+                width       : 156,     //设置宽度  
+                height      : 156,     //设置高度  
+                typeNumber  : -1,      //计算模式   
+                background  : "#ffffff",//背景颜色  
+                foreground  : "#000000" //前景颜色 
+          });
+      
+          var list =[];
+          list.push({
+            version:"1.0.0",
+            time:"2020-4",
+            by:"wzskyline",
+          })
+          console.table(list) 
+          function desc(){
+          this.version = "1.0.0";
+          this.time="2020-4";
+          this.by="wzskyline";
+          }
+          console.table(new desc()) 
+          console.timeEnd("init")
+      })
     </script>
   </body>
 </html>

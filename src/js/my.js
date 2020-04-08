@@ -6,6 +6,7 @@ ui={
                     <ul class="nav child_menu">
                       <li><a href="${path}/wzskyline/index.html">wzskyline</a></li>
                       <li><a href="${path}/wzskyline/nodejs.html">nodejs</a></li>
+                      <li><a href="${path}/wzskyline/git.html">git</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> py <span class="fa fa-chevron-down"></span></a>

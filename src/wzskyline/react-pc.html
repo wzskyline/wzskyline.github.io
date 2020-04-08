@@ -73,41 +73,79 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-       <a href="nodeJsDemo1.html" target="_blank">案例1:邮件/文件/网络/下载图片</a> 
        <div>
-         <h3 class="leetCode">leetCode 4月4号晚</h3>
+         <h3 class="leetCode">学习</h3>
          
         <pre class="brush:javascript">
-          //  不能step<1 连写
-          var countAndSay = function(n) {
-          var tailStr = "1"  
-          var step=1 
-          while(step < n){
-              step++ 
-              all=[]
-           while(tailStr.length>0  ){ 
-              curCount=[1,1]
-              curCount[1] = tailStr[0]
-            while(true){
-              if(tailStr[0]==tailStr[1]){
-                 curCount[0]=curCount[0]+1 
-                 tailStr=tailStr.substr(1) 
-               }else{ 
-                   tailStr=tailStr.substr(1) 
-                 break 
-               } 
-            } 
-            all.push(curCount) 	
-          } 
-          tailStr = all.join("");
-          while(tailStr.indexOf(",")>0){
-            tailStr = tailStr.replace(',',"");
-          } 
+          
+import React, { Component } from 'react';
+import Child from './s'
+export default class  extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            msg:'父类的消息',
+            name:'John',
+            age:99
         }
-        return tailStr
-      };
-      
-      </pre>
+    }
+
+    callback=(msg,name,age)=>{ 
+        this.setState({msg,name,age}); 
+    }
+
+  render() {
+    return (
+      <div style={{"text-align": "center"}}>
+         <div onClick={ ()=>{
+          this.state.msg = Date.now() 
+            this.setState({
+                msg:Date.now()
+            })
+          console.log(this.state)
+          
+        }}>clike me send msg to child</div>
+        <p> Message: &nbsp;&nbsp;{this.state.msg}</p>
+        <Child callback={this.callback} age={this.state.age} name={this.state.name}></Child>
+      </div>
+    );
+  }
+} 
+
+------
+
+import React from "react";
+
+class Child extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            name:'Andy',
+            age:31,
+            msg:"来自子类的消息"
+        }
+    }
+
+    change=()=>{
+        this.props.callback(this.state.msg,this.state.name,this.state.age);
+    }
+
+    render(){
+        return(
+            <div>
+                <div>{this.props.name}</div>
+                <div>{this.props.age}</div>
+                <button onClick={this.change}>点击</button>
+            </div>
+        )
+    }
+}
+
+export default Child;
+
+
+         
+       </pre>
        </div>
       </div>  
     
