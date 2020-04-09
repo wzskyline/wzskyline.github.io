@@ -99,9 +99,9 @@
     <script src="src/js/custom.min.js"></script>
 	  <script src="src/js/my.js"></script>
     <script>
+       ui.menu('src')
       jQuery(function(){
-          console.time("init")
-          ui.menu('src')
+          console.time("init") 
           $('#qrcode').qrcode({
                 text:"https://wzskyline.github.io",
                 render   : "canvas",//设置渲染方式  
