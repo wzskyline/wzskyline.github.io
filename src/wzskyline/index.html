@@ -107,6 +107,46 @@
         return tailStr
       };
       
+var flag = false;
+str.split("").map( function(e){
+    if(parseInt(e) <10){
+    flag = true;
+  }
+})
+return flag; 
+      
+function add(first,end){
+  first = first+"";
+  end = end + "";
+if(first.length<9 && end.length <9){
+ return parseInt(first) +parseInt(end)+"";
+}
+console.log(first)
+console.log(end)
+  var a = first.split("").map((e)=>parseInt(e));
+  var b = end.split("").map((e)=>parseInt(e));
+  var tmp = [];
+  if(b.length > a.length){
+      tmp = a;
+      a =b;
+      b =tmp;
+  }
+  tmp =[...a];
+  var index = b.length-1;
+  var sup = 0;
+  for(var i=a.length-1;i>=0;i--){
+      tmp[i] = a[i] + b[index] + sup;
+      if( tmp[i] >= 10){
+          tmp[i] = tmp[i] % 10; 
+          sup = 1;
+      }else{
+          sup = 0;
+      } 
+  console.log(tmp)
+      index = index -1; 
+  }
+    return sup>0? sup + tmp.join(""):tmp.join(""); 
+}
       </pre>
        </div>
       </div>  

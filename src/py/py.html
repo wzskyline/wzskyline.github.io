@@ -74,11 +74,112 @@
       <!-- page content -->
       <div class="right_col" role="main">
        <div>
-         <h3 class="leetCode">学习</h3>
+         <h3 class="leetCode">python 基础</h3>
          
         <pre class="brush:javascript">
           
-          npx http-server 
+          #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+ 
+intA = 1
+intOX = 0xff00
+floatB = 1.2
+floatC = 1.2e1 
+stringS = 'string' or "String"
+varNone = None 
+
+   
+print('String = %s \n int = %d ' % ('string',1))
+print('float = %f  \n Oxnumber = %x ' % (1.1,0xff00))
+print('String = %s \n use %% = %d %%' % (1,1))
+print('String = {0} \n use % = {1:.1f} %'.format ('1',11.123))
+
+bin()：其他进制转二进制
+oct()：其他进制转八进制
+int()：其他进制转十进制
+hex()：其他进制转十六进制
+
+10
+二进制：0b1010
+八进制：0o12
+十六进制：0xa
+
+int(str(123)) == 123
+int(bin(10),2) == int(oct(10),8) and 10 ==  int(hex(10),8)
+
+bool('') == True
+
+if (1 > 2 and True ) or not False：
+	print('\\\t\\')
+elif 1:	
+	print(r'\\\t不会转义\\')  
+else
+	print('''line1
+... line2
+... line3''')
+
+10 / 3 < 10 // 3 + 10 % 3
+
+chr(ord('a')) = 65 
+'中文'.encode('utf-8').decode('utf-8') == '中文'
+len( 'ABC' ) == len( b'ABC' ) 
+len('中文' ) < len('中文'.encode('utf-8'))  #2<6
+
+l = [1,2,3]
+l == l[0:len(l)]
+l[0] == l[-(len(l))]  
+l[1:] == l[-2:]    
+# 注意高级里面
+L = list(range(100))
+L[:10:2] 是 L[::2]的一部分
+'123456'[3:]
+l.append(4)
+l.pop()
+l.insert(1,11)
+l.pop(1)  
+tuple = (1,[]) #地址不可变 内容可变
+for e in list(range(5)):
+    print(e)
+dict = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
+d.pop('Bob') == 75
+print(dict['Michael']) 
+print(dict.get('bobi', -1) or None ) 
+set = set([1, 2, 3]) 
+set2 = set([2, 3, 4]) 
+set == {1,2,3}
+set.add(4)
+set.remove(4)
+set  & set2  == {2,3}
+set  | set2  == {1,2,3,4}
+
+#当前坐标 距离 角度 算出新坐标
+#python 函数返回多值是返回一个原组
+nx,ny = move(1,1,1,math.pi/6)
+
+import math
+def move(x, y, step, angle=0):
+    nx = x + step * math.cos(angle)
+    ny = y - step * math.sin(angle)
+    return nx, ny
+#几种传参方式	
+def func(x,default=1,*n,**kv): #最后是json传参
+    print(x)
+    print(default)
+    print(kv)
+    for e in n:
+        print(e)
+#func(1,11,22,{'name':'wz'})  #这种写法kv={}		
+func(1,11,22,name="wz",age=11)		
+
+#高级
+[x * x for x in range(1, 4)] == [1, 4, 9,]
+list(map(lambda x: x * x, [1, 2, 3]))
+[m + n for m in '12' for n in '12'] == ['11','12','21','22']
+
+[d for d in os.listdir('.')]
+d = {'x': 'A', 'y': 'B', 'z': 'C' }
+for k, v in d.items():
+	print(k, '=', v)
          
        </pre>
        </div>
