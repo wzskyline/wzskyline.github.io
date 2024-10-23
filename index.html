@@ -1,62 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>医世家</title>
-  <style>
-    .sidebar,
-    .page-header,
-    a.nav-item:last-of-type {
-      display: none;
-    }
-
-    .page {
-      margin: 0 6rem !important;
-    }
-
-    @media screen and (max-width: 600px) {
-      .page {
-        margin: 0 !important;
-        padding: 0.5rem !important;
-      }
-    }
-  </style>
-</head>
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script type="text/javascript" src="https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.4.js">
+  </script>
+</head> 
 <body>
-  <script src="https://unpkg.com/lightuepress@0.1.6/dist/lightuepress.min.js"></script>
   <script>
-
-    Lightuepress({
-      repo: 'smalllong/lightue',
-      docsDir: 'docs',
-      docsBranch: 'master',
-      editLinks: true,
-      locales: {
-        '/': {
-          lang: 'zh-CN',
-          title: '医世家',
-          description: '一个启发自Vue.js的轻量简单的web前端框架',
-          label: '简体中文',
-          selectText: '选择语言',
-          ariaLabel: '选择语言',
-          nav: [
-            { text: '官网', link: '/', activeMatch: '^/$|^/guide/' },
-            {
-              text: '下载', items: [
-                {
-                  text: 'uniapp',
-                  link: '',
-                },
-              ],
-            },
-
-          ],
-        },
-      },
-    }) 
+    document.addEventListener('UniAppJSBridgeReady', function () {
+      uni.postMessage({
+        data: {
+          url: 'https://wzskyline.github.io',
+        }
+      });
+    }); 
   </script>
 </body>
 
