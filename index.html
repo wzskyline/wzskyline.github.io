@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <script type="text/javascript" src="https://gitee.com/dcloud/uni-app/raw/dev/dist/uni.webview.1.5.4.js"></script>
-</head> 
+    <title>H5 Page</title>
+    <script src="https://unpkg.com/plus-webview-js@latest/dist/plus-webview-js.min.js"></script>
+</head>
 <body>
-  <script>
-    document.addEventListener('UniAppJSBridgeReady', function () {
-      uni.postMessage({
-        data: {
-          url: 'https://wzskyline.github.io',
-        }
-      });
-    }); 
-  </script>
-</body>
+    <button onclick="sendMessage()">Send Message to UniApp</button>
 
+    <script>
+        function sendMessage() {
+            // 使用 evalJS 方式发送消息
+            if (window.plus && window.plus.webview) {
+                var parentWebview = plus.webview.currentWebview().parent();
+                parentWebview.evalJS('handleMessageFromH5("Hello from H5!")');
+            }
+
+            // 或者使用 postMessage 方式发送消息
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                    type: 'message',
+                    data: 'Hello from H5 using postMessage!'
+                }, '*');
+            }
+        }
+
+        // 处理来自 UniApp 的消息（可选）
+        window.addEventListener('message', function(event) {
+            console.log('Received message from UniApp: ', event.data);
+        });
+    </script>
+</body>
 </html>
